@@ -297,7 +297,8 @@ void TAINT_MOV_MEMMEM8(u32 Tid, CONTEXT* ctxt, x86Instr* x86, u64 LFT, u64 RHT, 
 
 void TAINT_JMP_REG8(u32 Tid, CONTEXT* ctxt, x86Instr* x86, u8 OP){
   u8 op = taint_read(VM_REG[Tid], OP, 8);
-  if (op) LOG_UNA(REG);
+  if (op)
+    LOG_UNA(REG);
 }
 
 void TAINT_JMP_MEM8(u32 Tid, CONTEXT* ctxt, x86Instr* x86, VAR_MEM){
@@ -734,7 +735,7 @@ void LOG_X86(CONTEXT* ctxt, x86Instr* x86, ...){
 
 fn_exit:
   va_end(args);
-  __LOG("%llx ", x86->addr);
+  // __LOG("%llx ", x86->addr);
   LOG_INS(x86->Opc, x86->op_count, &MyOp[0], &MyOp[1], &MyOp[2]);
   PIN_UnlockClient();
 }
@@ -1187,10 +1188,8 @@ void Engine_OnInit(void* v){
 void OnFunctionEntry(u32 Tid, ADDRINT RET, char* Name){
   if (IsAddressExcluded(RET))
     return;
-  if (strcmp(Name, "strcmp") == 0){
-    taint_write(VM_REG[Tid], 8, 8, Msk(1));
-    __LOG("CALL FROM %llx Name: %s\n", RET, Name);
-  }
+  taint_write(VM_REG[Tid], 8, 8, Msk(1));
+  __LOG("CALL FROM %llx Name: %s\n", RET, Name);
 }
 
 void Hook_SteamAPI_RestartAppIfNecessary(u32 Tid, u64* RAX){

@@ -47,7 +47,7 @@ AND esi,r11d
 NOT esi
 MOV [0x91d04ff646],esi
 MOV rsi,[0x91d04ff646]
-SHR rsi,0x19
+SHR rsi,0x19            ZF
 MOV [0x91d04ff648],rsi
 MOV dl,0x0
 CLC
@@ -58,7 +58,6 @@ SHR sil,0x4
 MOV [0x91d04ff646],si
 MOV bp,0x0
 XOR bp,[0x91d04ff646]
-JNZ
 MOV [0x91d04ff448],bpl
 MOVZX r11w,[0x91d04ff440]
 MOV [0x91d04ff63e],r11w
@@ -107,7 +106,6 @@ MOV r11w,0xf
 AND r11w,ax
 NOT r11w
 MOV [0x91d04ff63e],r11w
-JNS
 MOV r11w,[0x91d04ff63e]
 MOV [0x91d04ff63c],r11w
 MOV ax,[0x91d04ff63c]
@@ -117,7 +115,7 @@ NOT dx
 AND ax,dx
 MOV [0x91d04ff63e],ax
 MOV cl,[0x91d04ff63e]
-MOV r11w,0x9669
+MOV r11w,0x9669          PF magic number
 SHR r11w,cl
 MOV [0x91d04ff63e],r11w
 MOV cx,[0x91d04ff63e]
@@ -155,7 +153,7 @@ NOT ebp
 AND edx,ebp
 MOV [0x91d04ff63e],edx
 MOV rdx,[0x91d04ff63e]
-SHR rdx,0x18
+SHR rdx,0x18             SF
 MOV [0x91d04ff640],rdx
 MOV rcx,[0x91d04ff640]
 MOV rbp,[0x91d04ff648]
@@ -177,7 +175,7 @@ MOV r11,[0x91d04ff648]
 MOV [0x91d04ff400],r11
 MOV r8,[0x91d04ff400]
 MOV rbx,r8
-SHR rbx,0x3
+SHR rbx,0x3              ZF->MEM_DSP
 MOV [0x91d04ff630],rbx
 MOV rdi,[0x91d04ff630]
 MOV [0x91d04ff628],rdi
@@ -203,7 +201,7 @@ MOV r8,[0x91d04ff630]
 ADD r8,0x91d04ff640
 MOV [0x91d04ff638],r8
 MOV r11,[0x91d04ff638]
-MOV rbx,[r11]
+MOV rbx,[r11]            get new VIP
 MOV [0x91d04ff638],rbx
 MOV rcx,[0x91d04ff638]
 MOV [0x91d04ff3f0],rcx
@@ -227,9 +225,9 @@ MOV rcx,[0x91d04ff5c0]
 MOV rsi,rcx
 MOV rbp,rsi
 SUB rbp,0x7ff537900000
-MOV ecx,[rsi]
-LEA rsi,[rsi+0x4]
-XOR ecx,ebp
+MOV ecx,[rsi]            VIP
+LEA rsi,[rsi+0x4]        VIP += 4
+XOR ecx,ebp              DECODE VM OPCODE
 NEG ecx
 DEC ecx
 ROL ecx,0x1

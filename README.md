@@ -25,7 +25,7 @@ MOV eax,[0x91d04ff440]
 MOV edx,0x0
 ADD edx,eax
 CLC
-ADC edx,0x7fffffff
+ADC edx,0x7fffffff      y = x + 0x7fffffff
 MOV [0x91d04ff646],edx
 MOV ecx,[0x91d04ff440]
 MOV [0x91d04ff642],ecx
@@ -45,7 +45,7 @@ MOV esi,r10d
 MOV r11d,[0x91d04ff646]
 AND esi,r11d
 NOT esi
-MOV [0x91d04ff646],esi
+MOV [0x91d04ff646],esi  ~((~y)|(~0x80000000)) == y & 0x80000000
 MOV rsi,[0x91d04ff646]
 SHR rsi,0x19            ZF
 MOV [0x91d04ff648],rsi

@@ -1,5 +1,5 @@
-taint analysis for virtualization code
-
+taint analysis for code virtualization
+```
 VMPROTECT OUTPUT:
 CALL FROM 7ff677bb604e Name: strcmp
 MOV [0x91d04ff5d8],rax
@@ -243,3 +243,4 @@ ADD r9,rcx
 MOV rdx,0x0
 ADD rdx,r9
 JMP rdx
+```
